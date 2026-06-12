@@ -2,84 +2,262 @@
 
 @theme {
   --color-ivory: #F8F5F0;
-  --color-charcoal: #2A2A2A;
+  --color-ivory-dark: #E8E3DC;
+  --color-charcoal: #1A1714;
   --color-walnut: #3B2314;
+  --color-walnut-dark: #2A1810;
   --color-brass: #C9933A;
+  --color-brass-light: #E0B87D;
   --color-sage: #4A7C59;
-  --color-rose: #C1554D;
-  --color-muted: #8A7E72;
+  --color-rose: #C0504A;
+  --color-muted: #7A756F;
+  --color-text-muted: #8A7E72;
 
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
-  --font-display: var(--font-geist-sans), system-ui, sans-serif;
+  --font-display: "Playfair Display", serif;
+  --font-body: "Inter", "DM Sans", system-ui, sans-serif;
 
   --radius-card: 12px;
-  --radius-btn: 8px;
+  --radius-btn: 4px;
 
-  --shadow-warm: 0 2px 16px rgba(59, 35, 20, 0.06);
-  --shadow-warm-lg: 0 8px 32px rgba(59, 35, 20, 0.1);
+  --shadow-warm: 0 4px 24px rgba(59, 35, 20, 0.08);
+  --shadow-warm-lg: 0 8px 32px rgba(59, 35, 20, 0.12);
+  --shadow-warm-xl: 0 12px 48px rgba(59, 35, 20, 0.16);
 
   --tracking-display: -0.02em;
-  --tracking-label: 0.08em;
+  --tracking-label: 0.04em;
+
+  --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 :root {
   --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  @apply bg-ivory text-charcoal font-sans antialiased;
+  @apply bg-ivory text-charcoal font-body antialiased;
   line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
-h1, h2, h3 { @apply font-display tracking-display; line-height: 1.2; }
+h1, h2, h3, h4, h5, h6 {
+  @apply font-display tracking-display;
+  line-height: 1.2;
+  font-weight: 600;
+}
+
+h1 { @apply text-display-lg; }
+h2 { @apply text-display-md; }
+h3 { @apply text-display-sm; }
 
 .eyebrow {
   @apply text-xs uppercase tracking-label text-brass font-medium;
 }
 
 /* Grain overlay for hero sections */
+.grain {
+  position: relative;
+}
+
 .grain::after {
   content: "";
-  position: absolute; inset: 0;
+  position: absolute;
+  inset: 0;
   pointer-events: none;
   opacity: 0.03;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='200' height='200' fill='%23000' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
+  z-index: 10;
 }
 
-/* Hidden scrollbar carousels */
-.no-scrollbar { scrollbar-width: none; }
-.no-scrollbar::-webkit-scrollbar { display: none; }
+/* Hidden scrollbar for carousels */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
 
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* Accessibility: reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }
-/* globals.css — only the thumb is interactive */
+
+/* Price range slider styling */
+.price-thumb {
+  appearance: none;
+  pointer-events: auto;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: #F8F5F0;
+  border: 2px solid #3B2314;
+  cursor: grab;
+  box-shadow: 0 2px 8px rgba(59, 35, 20, 0.15);
+  transition: all 0.2s ease-out;
+}
+
+.price-thumb:hover {
+  transform: scale(1.1);
+  box-shadow: 0 4px 12px rgba(59, 35, 20, 0.25);
+}
+
 .price-thumb::-webkit-slider-thumb {
-  appearance: none; pointer-events: auto;
-  height: 18px; width: 18px; border-radius: 50%;
-  background: #F8F5F0; border: 2px solid #3B2314;
-  cursor: grab; box-shadow: 0 2px 8px rgba(59,35,20,0.15);
+  appearance: none;
+  pointer-events: auto;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #F8F5F0;
+  border: 2px solid #3B2314;
+  cursor: grab;
+  box-shadow: 0 2px 8px rgba(59, 35, 20, 0.15);
 }
+
 .price-thumb::-moz-range-thumb {
-  pointer-events: auto; height: 18px; width: 18px; border-radius: 50%;
-  background: #F8F5F0; border: 2px solid #3B2314; cursor: grab;
+  pointer-events: auto;
+  height: 18px;
+  width: 18px;
+  border-radius: 50%;
+  background: #F8F5F0;
+  border: 2px solid #3B2314;
+  cursor: grab;
+  box-shadow: 0 2px 8px rgba(59, 35, 20, 0.15);
+  appearance: none;
 }
-/* globals.css — warm shimmer */
+
+/* Warm shimmer animation */
 @keyframes shimmer {
-  0%   { background-position: -400px 0; }
-  100% { background-position: 400px 0; }
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
 }
+
 .animate-shimmer {
-  background: linear-gradient(90deg, #EFEAE2 25%, #F8F5F0 50%, #EFEAE2 75%);
+  background: linear-gradient(
+    90deg,
+    #EFEAE2 25%,
+    #F8F5F0 50%,
+    #EFEAE2 75%
+  );
   background-size: 800px 100%;
   animation: shimmer 1.4s infinite linear;
 }
-/* globals.css */
+
+/* Form inputs */
 .input {
   @apply w-full rounded-btn border border-walnut/20 bg-white px-4 py-3 text-sm
-         outline-none transition-colors duration-200 focus:border-walnut;
+         outline-none transition-colors duration-200;
+  font-family: inherit;
+}
+
+.input:focus {
+  @apply border-walnut ring-1 ring-walnut/10;
+}
+
+.input:disabled {
+  @apply bg-ivory text-muted cursor-not-allowed;
+}
+
+/* Button base styles */
+.btn {
+  @apply inline-flex items-center justify-center px-6 py-3 rounded-btn
+         font-medium transition-all duration-200 cursor-pointer
+         disabled:opacity-50 disabled:cursor-not-allowed;
+  font-family: inherit;
+}
+
+.btn-primary {
+  @apply bg-walnut text-ivory hover:bg-walnut-dark shadow-warm
+         hover:shadow-warm-lg active:scale-95;
+}
+
+.btn-secondary {
+  @apply border-2 border-walnut text-walnut hover:bg-walnut hover:text-ivory
+         transition-colors;
+}
+
+.btn-ghost {
+  @apply text-walnut hover:bg-ivory-dark transition-colors;
+}
+
+/* Link styles */
+a {
+  @apply transition-colors duration-200;
+  text-decoration: none;
+}
+
+a:hover {
+  @apply text-brass;
+}
+
+/* Selection styling */
+::selection {
+  background-color: rgba(201, 147, 58, 0.2);
+  color: #3B2314;
+}
+
+::-moz-selection {
+  background-color: rgba(201, 147, 58, 0.2);
+  color: #3B2314;
+}
+
+/* Scrollbar styling for Webkit browsers */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #F8F5F0;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #C9933A;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #3B2314;
+}
+
+/* Utilities for common patterns */
+.blur-backdrop {
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.gradient-warm-overlay {
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(26, 23, 20, 0.5) 100%
+  );
+}
+
+.text-balance {
+  text-wrap: balance;
 }
