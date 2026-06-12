@@ -1,26 +1,85 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ivory: #F8F5F0;
+  --color-charcoal: #2A2A2A;
+  --color-walnut: #3B2314;
+  --color-brass: #C9933A;
+  --color-sage: #4A7C59;
+  --color-rose: #C1554D;
+  --color-muted: #8A7E72;
+
+  --font-sans: var(--font-geist-sans), system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), monospace;
+  --font-display: var(--font-geist-sans), system-ui, sans-serif;
+
+  --radius-card: 12px;
+  --radius-btn: 8px;
+
+  --shadow-warm: 0 2px 16px rgba(59, 35, 20, 0.06);
+  --shadow-warm-lg: 0 8px 32px rgba(59, 35, 20, 0.1);
+
+  --tracking-display: -0.02em;
+  --tracking-label: 0.08em;
+}
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-ivory text-charcoal font-sans antialiased;
+  line-height: 1.7;
+}
+
+h1, h2, h3 { @apply font-display tracking-display; line-height: 1.2; }
+
+.eyebrow {
+  @apply text-xs uppercase tracking-label text-brass font-medium;
+}
+
+/* Grain overlay for hero sections */
+.grain::after {
+  content: "";
+  position: absolute; inset: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* Hidden scrollbar carousels */
+.no-scrollbar { scrollbar-width: none; }
+.no-scrollbar::-webkit-scrollbar { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+/* globals.css — only the thumb is interactive */
+.price-thumb::-webkit-slider-thumb {
+  appearance: none; pointer-events: auto;
+  height: 18px; width: 18px; border-radius: 50%;
+  background: #F8F5F0; border: 2px solid #3B2314;
+  cursor: grab; box-shadow: 0 2px 8px rgba(59,35,20,0.15);
+}
+.price-thumb::-moz-range-thumb {
+  pointer-events: auto; height: 18px; width: 18px; border-radius: 50%;
+  background: #F8F5F0; border: 2px solid #3B2314; cursor: grab;
+}
+/* globals.css — warm shimmer */
+@keyframes shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position: 400px 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg, #EFEAE2 25%, #F8F5F0 50%, #EFEAE2 75%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+/* globals.css */
+.input {
+  @apply w-full rounded-btn border border-walnut/20 bg-white px-4 py-3 text-sm
+         outline-none transition-colors duration-200 focus:border-walnut;
 }
