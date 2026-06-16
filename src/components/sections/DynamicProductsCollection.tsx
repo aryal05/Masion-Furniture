@@ -290,7 +290,7 @@ export function DynamicProductsCollection() {
                     <span className="text-[#8A8A8A] text-xs capitalize">{product.material}</span>
                     <div className="flex items-center gap-1">
                       <span className="text-[#D4A017]">★</span>
-                      <span className="text-[#D4A017] font-semibold text-xs md:text-sm">{product.average_rating.toFixed(1)}</span>
+                      <span className="text-[#D4A017] font-semibold text-xs md:text-sm">{(product.average_rating ?? 0).toFixed(1)}</span>
                     </div>
                   </div>
                   <h3 className="font-bold text-sm md:text-base text-[#1A1A1A] mt-1 line-clamp-1">{product.name}</h3>

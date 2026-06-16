@@ -158,7 +158,7 @@ export default function AdminAnalyticsPage() {
                   <div className="flex-1 min-w-0">
                     <p className="font-medium truncate">{product.name}</p>
                     <p className="text-xs text-muted">
-                      ⭐ {product.average_rating.toFixed(1)} ({product.review_count}{" "}
+                      ⭐ {(product.average_rating ?? 0).toFixed(1)} ({product.review_count ?? 0}{" "}
                       reviews)
                     </p>
                   </div>

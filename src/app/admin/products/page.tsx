@@ -99,30 +99,37 @@ export default function AdminProductsPage() {
       key: "total_stock" as const,
       label: "Stock",
       sortable: true,
-      render: (item: Product) => (
-        <span
-          className={
-            item.total_stock <= 5
-              ? "text-rose font-medium"
-              : item.total_stock <= 20
-              ? "text-amber-600"
-              : ""
-          }
-        >
-          {item.total_stock}
-        </span>
-      ),
+      render: (item: Product) => {
+        const stock = item.total_stock ?? 0;
+        return (
+          <span
+            className={
+              stock <= 5
+                ? "text-rose font-medium"
+                : stock <= 20
+                ? "text-amber-600"
+                : ""
+            }
+          >
+            {stock}
+          </span>
+        );
+      },
     },
     {
       key: "average_rating" as const,
       label: "Rating",
       sortable: true,
-      render: (item: Product) => (
-        <span>
-          ⭐ {item.average_rating.toFixed(1)}{" "}
-          <span className="text-muted">({item.review_count})</span>
-        </span>
-      ),
+      render: (item: Product) => {
+        const rating = item.average_rating ?? 0;
+        const reviews = item.review_count ?? 0;
+        return (
+          <span>
+            ⭐ {rating.toFixed(1)}{" "}
+            <span className="text-muted">({reviews})</span>
+          </span>
+        );
+      },
     },
   ];
 

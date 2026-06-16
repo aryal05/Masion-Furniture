@@ -172,7 +172,7 @@ export function ProductDetailClient({ product, relatedProducts, reviews }: Props
                 ))}
               </div>
               <span className="text-sm text-muted">
-                {product.average_rating.toFixed(1)} ({product.review_count} reviews)
+                {(product.average_rating ?? 0).toFixed(1)} ({product.review_count ?? 0} reviews)
               </span>
             </div>
 
