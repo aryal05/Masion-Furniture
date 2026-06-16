@@ -24,7 +24,7 @@ export function ProductCard({ product, onQuickView }: {
       onMouseLeave={() => setHovered(false)}
     >
       <div className="relative aspect-[3/4] overflow-hidden rounded-card bg-white shadow-warm transition-shadow duration-500 ease-luxe group-hover:shadow-warm-lg">
-        <Link href={`/products/${product.slug}`}>
+        <Link href={`/product/${product.slug}`}>
           {/* Primary image — shared layout id for listing→PDP transition */}
           <motion.div layoutId={`product-image-${product.id}`} className="absolute inset-0">
             <Image

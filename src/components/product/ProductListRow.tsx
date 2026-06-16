@@ -22,7 +22,7 @@ export function ProductListRow({ product, onQuickView }: Props) {
       className="group flex gap-6 rounded-card border border-walnut/10 bg-white p-4 shadow-warm transition-shadow hover:shadow-warm-lg"
     >
       {/* Image */}
-      <Link href={`/products/${product.slug}`} className="relative w-32 shrink-0 md:w-48">
+      <Link href={`/product/${product.slug}`} className="relative w-32 shrink-0 md:w-48">
         <div className="aspect-square overflow-hidden rounded-btn">
           <Image
             src={product.images[0]?.url}
@@ -52,7 +52,7 @@ export function ProductListRow({ product, onQuickView }: Props) {
       {/* Content */}
       <div className="flex flex-1 flex-col justify-between py-2">
         <div>
-          <Link href={`/products/${product.slug}`}>
+          <Link href={`/product/${product.slug}`}>
             <h3 className="font-display text-lg hover:text-walnut">{product.name}</h3>
           </Link>
           <p className="mt-1 text-sm text-muted">{product.material}</p>

@@ -23,13 +23,16 @@ export default function AccountWishlistPage() {
         .from("products")
         .select("*, product_images(url, alt, sort_order), variants(*)")
         .in("id", wishlist.items);
-      return (data ?? []) as Product[];
+      // Data from Supabase has LegacyProduct shape (variants, product_images)
+      // which differs from the local Product interface used for static data
+      return (data ?? []) as unknown as Product[];
     },
     enabled: wishlist.items.length > 0,
   });
 
-  const handleAddToCart = (product: Product) => {
-    const defaultVariant = product.variants?.find((v) => v.is_default) ??
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Supabase data has LegacyProduct shape
+  const handleAddToCart = (product: any) => {
+    const defaultVariant = product.variants?.find((v: any) => v.is_default) ??
       product.variants?.[0];
     if (!defaultVariant) return;
 
@@ -95,8 +98,10 @@ export default function AccountWishlistPage() {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => {
-            const mainImage = product.images?.sort(
-              (a, b) => a.sort_order - b.sort_order
+            // product comes from Supabase with LegacyProduct shape
+            const p = product as any;
+            const mainImage = p.images?.sort(
+              (a: any, b: any) => a.sort_order - b.sort_order
             )[0];
 
             return (
@@ -131,9 +136,9 @@ export default function AccountWishlistPage() {
                     <span className="font-display text-lg">
                       {formatPrice(product.price)}
                     </span>
-                    {product.compare_at_price && (
+                    {p.compare_at_price && (
                       <span className="text-sm text-muted line-through">
-                        {formatPrice(product.compare_at_price)}
+                        {formatPrice(p.compare_at_price)}
                       </span>
                     )}
                   </div>

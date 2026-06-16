@@ -1,24 +1,9 @@
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { MobileTabBar } from "@/components/layout/MobileTabBar";
-import { CartDrawer } from "@/components/cart/CartDrawer";
-import { AuthModal } from "@/components/auth/AuthModal";
-import { ToastContainer } from "@/components/ui/Toast";
-
+// Storefront layout — navbar/footer are now in root layout
+// This route group only exists for sub-routes like account, wishlist, etc.
 export default function StorefrontLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <>
-      <Navbar />
-      <main className="flex-1 pb-20 lg:pb-0">{children}</main>
-      <Footer />
-      <MobileTabBar />
-      <CartDrawer />
-      <AuthModal />
-      <ToastContainer />
-    </>
-  );
+  return <>{children}</>;
 }

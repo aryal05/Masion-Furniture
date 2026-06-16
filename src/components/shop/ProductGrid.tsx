@@ -1,52 +1,46 @@
 "use client";
 import { motion } from "framer-motion";
-import { useEffect, useRef } from "react";
-import { ProductCard } from "@/components/product/ProductCard";
-import { ProductListRow } from "@/components/product/ProductListRow";
-import { staggerContainer } from "@/components/motion/presets";
+import { ProductCard } from "@/components/shop/ProductCard";
+import { SkeletonCard } from "@/components/ui/SkeletonCard";
+import { staggerContainer, staggerChild } from "@/lib/motion";
 import type { Product } from "@/types";
 
-interface Props {
+interface ProductGridProps {
   products: Product[];
   view: "grid" | "list";
   isLoading: boolean;
-  hasNextPage: boolean | undefined;
-  isFetchingNextPage: boolean;
-  fetchNextPage: () => void;
-  onQuickView: (p: Product) => void;
   onClearFilters: () => void;
 }
 
 export function ProductGrid({
-  products, view, isLoading, hasNextPage,
-  isFetchingNextPage, fetchNextPage, onQuickView, onClearFilters,
-}: Props) {
-  // Infinite scroll sentinel
-  const sentinelRef = useRef<HTMLDivElement>(null);
-  useEffect(() => {
-    const el = sentinelRef.current;
-    if (!el) return;
-    const io = new IntersectionObserver(
-      ([entry]) => entry.isIntersecting && hasNextPage && !isFetchingNextPage && fetchNextPage(),
-      { rootMargin: "600px" } // prefetch before user reaches bottom
+  products,
+  view,
+  isLoading,
+  onClearFilters,
+}: ProductGridProps) {
+  if (isLoading) {
+    return (
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 md:gap-4 lg:gap-5 xl:gap-6">
+        {Array.from({ length: 8 }).map((_, i) => (
+          <SkeletonCard key={i} />
+        ))}
+      </div>
     );
-    io.observe(el);
-    return () => io.disconnect();
-  }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
-
-  if (isLoading) return <SkeletonGrid count={9} />;
+  }
 
   if (products.length === 0) {
     return (
-      <div className="flex flex-col items-center py-24 text-center">
-        <div className="mb-6 grid h-20 w-20 place-items-center rounded-full bg-walnut/5 text-3xl">🪑</div>
-        <h2 className="font-display text-2xl">Nothing matches those filters</h2>
-        <p className="mt-2 max-w-sm text-sm text-muted">
-          Try widening your price range or removing a material filter.
+      <div className="flex flex-col items-center justify-center py-24 text-center max-w-md mx-auto">
+        <div className="mb-6 w-20 h-20 rounded-full bg-surface flex items-center justify-center text-4xl">
+          🪑
+        </div>
+        <h2 className="font-display text-2xl font-black text-ink">No matches found</h2>
+        <p className="mt-2 text-sm text-body">
+          Try widening your price range or removing some filters to see more results.
         </p>
         <button
           onClick={onClearFilters}
-          className="mt-6 rounded-btn bg-walnut px-6 py-3 text-sm uppercase tracking-label text-ivory"
+          className="mt-6 bg-primary text-white rounded-full px-6 py-3 text-sm font-semibold hover:bg-primary-hover transition-colors"
         >
           Clear all filters
         </button>
@@ -55,43 +49,22 @@ export function ProductGrid({
   }
 
   return (
-    <>
-      <motion.div
-        layout
-        variants={staggerContainer(0.1)}
-        initial="hidden"
-        animate="visible"
-        className={
-          view === "grid"
-            ? "grid grid-cols-2 gap-x-4 gap-y-10 md:gap-x-6 lg:grid-cols-3"
-            : "flex flex-col gap-6"
-        }
-      >
-        {products.map((p) =>
-          view === "grid" ? (
-            <ProductCard key={p.id} product={p} onQuickView={onQuickView} />
-          ) : (
-            <ProductListRow key={p.id} product={p} onQuickView={onQuickView} />
-          )
-        )}
-      </motion.div>
-
-      {isFetchingNextPage && <div className="mt-10"><SkeletonGrid count={3} /></div>}
-      <div ref={sentinelRef} aria-hidden className="h-px" />
-    </>
-  );
-}
-
-function SkeletonGrid({ count }: { count: number }) {
-  return (
-    <div className="grid grid-cols-2 gap-x-4 gap-y-10 md:gap-x-6 lg:grid-cols-3">
-      {Array.from({ length: count }).map((_, i) => (
-        <div key={i}>
-          <div className="aspect-[3/4] animate-shimmer rounded-card" />
-          <div className="mt-4 h-5 w-3/4 animate-shimmer rounded" />
-          <div className="mt-2 h-4 w-1/3 animate-shimmer rounded" />
-        </div>
+    <motion.div
+      layout
+      variants={staggerContainer(0.1)}
+      initial="hidden"
+      animate="visible"
+      className={
+        view === "grid"
+          ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-3 md:gap-4 lg:gap-5 xl:gap-6"
+          : "flex flex-col gap-4"
+      }
+    >
+      {products.map((product) => (
+        <motion.div key={product.id} variants={staggerChild}>
+          <ProductCard product={product} />
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 }

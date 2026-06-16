@@ -104,7 +104,7 @@ export function QuickViewModal({ product, onClose }: {
                     </button>
                   </div>
 
-                  <Link href={`/products/${product.slug}`} className="mt-auto pt-6 text-sm text-walnut underline underline-offset-4">
+                  <Link href={`/product/${product.slug}`} className="mt-auto pt-6 text-sm text-walnut underline underline-offset-4">
                     View Full Details →
                   </Link>
                 </div>

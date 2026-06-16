@@ -14,21 +14,21 @@ interface ButtonProps extends Omit<HTMLMotionProps<"button">, "ref"> {
 
 const variants: Record<ButtonVariant, string> = {
   primary:
-    "bg-walnut text-ivory hover:bg-walnut-light shadow-warm hover:shadow-warm-lg hover:-translate-y-0.5",
+    "bg-primary text-white hover:bg-primary-hover shadow-sm hover:shadow-xl",
   secondary:
-    "bg-brass text-ivory hover:bg-brass/90 shadow-warm hover:shadow-warm-lg hover:-translate-y-0.5",
+    "bg-gold text-white hover:bg-gold/90 shadow-sm hover:shadow-xl",
   outline:
-    "border border-walnut text-walnut hover:bg-walnut hover:text-ivory",
+    "border-2 border-primary text-primary hover:bg-primary hover:text-white",
   ghost:
-    "text-walnut hover:bg-walnut/5",
+    "text-body hover:bg-surface",
   danger:
-    "bg-rose text-white hover:bg-rose/90 shadow-warm hover:shadow-warm-lg hover:-translate-y-0.5",
+    "bg-rose text-white hover:bg-rose/90 shadow-sm hover:shadow-xl",
 };
 
 const sizes: Record<ButtonSize, string> = {
-  sm: "px-4 py-2 text-xs",
-  md: "px-6 py-3 text-sm",
-  lg: "px-8 py-4 text-sm",
+  sm: "px-4 py-2 text-sm",
+  md: "px-6 py-3 text-base",
+  lg: "px-8 py-4 text-lg",
 };
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
@@ -48,13 +48,15 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
     return (
       <motion.button
         ref={ref}
+        whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
         transition={{ duration: 0.15 }}
         disabled={disabled || loading}
         className={`
-          rounded-btn uppercase tracking-label font-medium
-          transition-all duration-300 ease-luxe
+          rounded-full font-semibold
+          transition-all duration-200
           disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none
+          focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2
           ${variants[variant]}
           ${sizes[size]}
           ${fullWidth ? "w-full" : ""}

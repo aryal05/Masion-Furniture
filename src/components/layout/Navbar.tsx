@@ -1,10 +1,9 @@
 "use client";
 import { m, AnimatePresence } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCart } from "@/stores/cart";
 import { useUI } from "@/stores/ui";
-import { useScrollDirection } from "@/hooks/useScrollDirection";
 import { useUser } from "@/hooks/useUser";
 import { MegaMenu } from "./MegaMenu";
 import { MobileNavDrawer } from "./MobileNavDrawer";
@@ -12,52 +11,59 @@ import { MobileNavDrawer } from "./MobileNavDrawer";
 const NAV_LINKS = [
   { label: "Shop", href: "/shop", hasMega: true },
   { label: "Collections", href: "/collections", hasMega: true },
-  { label: "Lookbook", href: "/lookbook" },
   { label: "About", href: "/about" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export function Navbar() {
-  const { direction, isAtTop } = useScrollDirection();
   const { openMobileNav, openSearch, openAuthModal } = useUI();
   const { openDrawer, count } = useCart();
   const { user } = useUser();
   const [activeMega, setActiveMega] = useState<string | null>(null);
+  const [scrolled, setScrolled] = useState(false);
   const cartCount = count();
 
-  const isHidden = direction === "down" && !isAtTop;
-  const isTransparent = isAtTop;
+  // Track scroll position - navbar becomes solid after scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   return (
     <>
-      <m.header
-        initial={false}
-        animate={{ y: isHidden ? "-100%" : "0%" }}
-        transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+      {/* Spacer to prevent content from going under fixed navbar */}
+      <div className="h-16 md:h-20" />
+      
+      <header
         className={`
-          fixed inset-x-0 top-0 z-40 transition-colors duration-300
-          ${isTransparent ? "bg-transparent" : "bg-ivory/95 backdrop-blur-md shadow-warm"}
+          fixed inset-x-0 top-0 z-50 transition-all duration-300
+          ${scrolled 
+            ? "bg-white/95 backdrop-blur-md shadow-lg" 
+            : "bg-white shadow-sm"
+          }
         `}
         onMouseLeave={() => setActiveMega(null)}
       >
-        <nav className="mx-auto flex h-20 max-w-[1440px] items-center justify-between px-6 lg:px-10">
+        <nav className="mx-auto flex h-16 md:h-20 max-w-[1440px] items-center justify-between px-4 md:px-6 lg:px-10">
           {/* Mobile menu toggle */}
           <button
             onClick={openMobileNav}
-            className="lg:hidden h-11 w-11 grid place-items-center"
+            className="lg:hidden h-10 w-10 grid place-items-center rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors"
             aria-label="Open menu"
           >
             <HamburgerIcon />
           </button>
 
           {/* Logo */}
-          <Link href="/" className="font-display text-2xl tracking-display">
-            <span className={isTransparent ? "text-ivory" : "text-charcoal"}>
-              Maison
-            </span>
+          <Link href="/" className="font-display text-xl md:text-2xl tracking-display text-[#2D4A2D] font-bold">
+            Maison
           </Link>
 
           {/* Desktop nav */}
-          <ul className="hidden lg:flex items-center gap-10">
+          <ul className="hidden lg:flex items-center gap-8">
             {NAV_LINKS.map((link) => (
               <li
                 key={link.href}
@@ -65,10 +71,7 @@ export function Navbar() {
               >
                 <Link
                   href={link.href}
-                  className={`
-                    text-sm uppercase tracking-label transition-colors
-                    ${isTransparent ? "text-ivory/90 hover:text-ivory" : "text-charcoal/80 hover:text-charcoal"}
-                  `}
+                  className="text-sm uppercase tracking-wider font-medium text-gray-700 hover:text-[#2D4A2D] transition-colors"
                 >
                   {link.label}
                 </Link>
@@ -77,13 +80,11 @@ export function Navbar() {
           </ul>
 
           {/* Right icons */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1 md:gap-2">
             <button
               onClick={openSearch}
               aria-label="Search"
-              className={`h-11 w-11 grid place-items-center rounded-full transition-colors
-                ${isTransparent ? "text-ivory hover:bg-white/10" : "text-charcoal hover:bg-charcoal/5"}
-              `}
+              className="h-10 w-10 grid place-items-center rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors text-gray-700"
             >
               <SearchIcon />
             </button>
@@ -91,9 +92,7 @@ export function Navbar() {
             <button
               onClick={() => user ? null : openAuthModal()}
               aria-label={user ? "Account" : "Sign in"}
-              className={`hidden md:grid h-11 w-11 place-items-center rounded-full transition-colors
-                ${isTransparent ? "text-ivory hover:bg-white/10" : "text-charcoal hover:bg-charcoal/5"}
-              `}
+              className="hidden md:grid h-10 w-10 place-items-center rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors text-gray-700"
             >
               {user ? (
                 <Link href="/account">
@@ -108,9 +107,7 @@ export function Navbar() {
               id="header-cart-icon"
               onClick={openDrawer}
               aria-label={`Cart with ${cartCount} items`}
-              className={`relative h-11 w-11 grid place-items-center rounded-full transition-colors
-                ${isTransparent ? "text-ivory hover:bg-white/10" : "text-charcoal hover:bg-charcoal/5"}
-              `}
+              className="relative h-10 w-10 grid place-items-center rounded-full hover:bg-gray-100 active:bg-gray-200 transition-colors text-gray-700"
             >
               <CartIcon />
               <AnimatePresence>
@@ -119,7 +116,7 @@ export function Navbar() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     exit={{ scale: 0 }}
-                    className="absolute -right-0.5 -top-0.5 grid h-5 w-5 place-items-center rounded-full bg-walnut text-[10px] font-medium text-ivory"
+                    className="absolute -right-0.5 -top-0.5 grid h-5 w-5 place-items-center rounded-full bg-[#2D4A2D] text-[10px] font-bold text-white"
                   >
                     {cartCount}
                   </m.span>
@@ -138,7 +135,7 @@ export function Navbar() {
             />
           )}
         </AnimatePresence>
-      </m.header>
+      </header>
 
       <MobileNavDrawer />
     </>

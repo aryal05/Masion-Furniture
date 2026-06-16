@@ -23,7 +23,7 @@ export function BestSellersCarousel() {
         .eq("status", "published")
         .order("units_sold", { ascending: false })
         .limit(8);
-      return (data ?? []) as Product[];
+      return (data ?? []) as unknown as Product[];
     },
     staleTime: 5 * 60 * 1000,
   });

@@ -1,13 +1,42 @@
 @import "tailwindcss";
 
 @theme {
+  /* Custom Breakpoints */
+  --breakpoint-xs: 320px;
+  --breakpoint-sm: 480px;
+  --breakpoint-md: 640px;
+  --breakpoint-lg: 768px;
+  --breakpoint-xl: 1024px;
+  --breakpoint-2xl: 1280px;
+  --breakpoint-3xl: 1536px;
+
+  /* Design System Colors per spec */
+  --color-primary: #2D4A2D;
+  --color-primary-hover: #3A5A3A;
+  --color-gold: #D4A017;
+  --color-surface: #F5F5F0;
+  --color-card: #FFFFFF;
+  --color-ink: #1A1A1A;
+  --color-body: #4A4A4A;
+  --color-muted: #8A8A8A;
+  --color-line: #E0E0E0;
+
+  /* Legacy colors (keeping for compatibility with existing code) */
+  --color-accent: #D4A017;
+  --color-accent-light: #E8B84B;
+  --color-bg-main: #F5F5F0;
+  --color-bg-card: #F8F8F6;
+  --color-text-dark: #1A1A1A;
+  --color-text-body: #4A4A4A;
+  --color-text-muted: #8A8A8A;
+  --color-border: #E8E8E8;
+  --color-white: #FFFFFF;
   --color-ivory: #F8F5F0;
   --color-charcoal: #2A2A2A;
   --color-walnut: #3B2314;
   --color-brass: #C9933A;
   --color-sage: #4A7C59;
   --color-rose: #C1554D;
-  --color-muted: #8A7E72;
 
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), monospace;
@@ -15,9 +44,14 @@
 
   --radius-card: 12px;
   --radius-btn: 8px;
+  --radius-pill: 9999px;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
 
   --shadow-warm: 0 2px 16px rgba(59, 35, 20, 0.06);
   --shadow-warm-lg: 0 8px 32px rgba(59, 35, 20, 0.1);
+  --shadow-card: 0 4px 20px rgba(0,0,0,0.06);
+  --shadow-card-hover: 0 12px 40px rgba(0,0,0,0.12);
 
   --tracking-display: -0.02em;
   --tracking-label: 0.08em;
@@ -25,6 +59,9 @@
 
 :root {
   --ease-luxe: cubic-bezier(0.16, 1, 0.3, 1);
+  --topbar-height: 40px;
+  --nav-height: 72px;
+  --header-height: calc(var(--topbar-height) + var(--nav-height));
 }
 
 body {
@@ -50,6 +87,18 @@ h1, h2, h3 { @apply font-display tracking-display; line-height: 1.2; }
 /* Hidden scrollbar carousels */
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Enhanced scrollbar hide for horizontal scrolling */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* Safe area support for iPhone notch/home indicator */
+@supports (padding-bottom: env(safe-area-inset-bottom)) {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+  .pt-safe { padding-top: env(safe-area-inset-top); }
+  .pl-safe { padding-left: env(safe-area-inset-left); }
+  .pr-safe { padding-right: env(safe-area-inset-right); }
+}
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

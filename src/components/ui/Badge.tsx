@@ -7,19 +7,19 @@ interface BadgeProps {
 }
 
 const variants: Record<BadgeVariant, string> = {
-  default: "bg-walnut/10 text-walnut",
+  default: "bg-primary/10 text-primary",
   sale: "bg-rose text-white",
-  bestseller: "bg-brass text-white",
-  new: "bg-sage text-white",
-  outOfStock: "bg-charcoal/10 text-charcoal/60",
+  bestseller: "bg-gold text-white",
+  new: "bg-primary text-white",
+  outOfStock: "bg-muted/10 text-muted/60",
 };
 
 export function Badge({ variant = "default", children, className = "" }: BadgeProps) {
   return (
     <span
       className={`
-        inline-flex items-center rounded-btn px-2.5 py-1
-        text-[11px] uppercase tracking-label font-medium
+        inline-flex items-center rounded-full px-2.5 py-1
+        text-xs uppercase tracking-widest font-semibold
         ${variants[variant]}
         ${className}
       `}

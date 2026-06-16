@@ -23,7 +23,7 @@ export function RelatedProducts({ currentProductId, categoryId }: Props) {
         .eq("status", "published")
         .neq("id", currentProductId)
         .limit(4);
-      return (data ?? []) as Product[];
+      return (data ?? []) as unknown as Product[];
     },
     staleTime: 5 * 60 * 1000,
   });

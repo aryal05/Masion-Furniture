@@ -7,7 +7,17 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'images.unsplash.com',
       },
+      {
+        protocol: 'https',
+        hostname: '*.supabase.co',
+      },
+      {
+        protocol: 'https',
+        hostname: 'bpetipktftbvmbsqjmtg.supabase.co',
+      },
     ],
+    // Allow all external images in development
+    unoptimized: process.env.NODE_ENV === 'development',
   },
 };
 

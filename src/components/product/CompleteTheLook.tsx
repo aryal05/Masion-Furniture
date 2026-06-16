@@ -59,7 +59,7 @@ export function CompleteTheLook({ productId }: Props) {
         {bundle.map((product: any) => (
           <Link
             key={product.id}
-            href={`/products/${product.slug}`}
+            href={`/product/${product.slug}`}
             className="group flex items-center gap-3 rounded-card bg-white p-3 shadow-warm transition-shadow hover:shadow-warm-lg"
           >
             <div className="relative h-16 w-16 overflow-hidden rounded-btn">

@@ -1,6 +1,33 @@
 // Core domain types for Maison Furniture
 
+// Design system types per spec
+export type Material = 'wood' | 'metal' | 'fabric' | 'leather' | 'glass' | 'rattan' | 'marble' | 'acrylic';
+
+export interface ColorOption {
+  name: string;
+  hex: string;
+}
+
 export interface Product {
+  id: string;
+  slug: string;
+  name: string;
+  price: number;
+  compareAtPrice?: number;
+  rating: number;
+  reviewCount: number;
+  category: string;
+  material: Material;
+  colors: ColorOption[];
+  images: string[];
+  inStock: boolean;
+  isOnSale: boolean;
+  freeShipping: boolean;
+  createdAt: string;
+}
+
+// Legacy Product interface preserved for backward compatibility
+export interface LegacyProduct {
   id: string;
   slug: string;
   name: string;
@@ -180,4 +207,64 @@ export interface ApiError {
   error: string;
   message: string;
   statusCode: number;
+}
+
+// Additional types for new pages per spec
+export interface Filter {
+  category?: string;
+  priceRange?: [number, number];
+  material?: Material;
+  rating?: number;
+  inStock?: boolean;
+  freeShipping?: boolean;
+  onSale?: boolean;
+}
+
+export interface TeamMember {
+  id: string;
+  name: string;
+  role: string;
+  bio: string;
+  image: string;
+  linkedin?: string;
+  twitter?: string;
+}
+
+export interface FAQ {
+  id: string;
+  question: string;
+  answer: string;
+  category: 'general' | 'shipping' | 'returns' | 'payment' | 'products';
+}
+
+export interface Milestone {
+  id: string;
+  year: number;
+  title: string;
+  description: string;
+}
+
+export interface Style {
+  id: string;
+  name: string;
+  slug: string;
+  image: string;
+  productCount: number;
+}
+
+export interface BlogPost {
+  id: string;
+  slug: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  category: 'interior-design' | 'sustainability' | 'trends' | 'care-tips';
+  image: string;
+  author: {
+    name: string;
+    avatar: string;
+  };
+  readTime: number;
+  publishedAt: string;
+  isFeatured: boolean;
 }

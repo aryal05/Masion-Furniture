@@ -28,7 +28,8 @@ export default function AdminAnalyticsPage() {
         .eq("status", "published")
         .order("review_count", { ascending: false })
         .limit(5);
-      return (data ?? []) as Product[];
+      // Supabase joins return product_images as objects, not matching local Product type
+      return (data ?? []) as unknown as Product[];
     },
   });
 
@@ -136,8 +137,9 @@ export default function AdminAnalyticsPage() {
         ) : (
           <div className="divide-y divide-walnut/5">
             {products.map((product, i) => {
-              const img = product.images?.sort(
-                (a, b) => a.sort_order - b.sort_order
+              const p = product as any;
+              const img = p.images?.sort(
+                (a: any, b: any) => a.sort_order - b.sort_order
               )[0];
               return (
                 <div

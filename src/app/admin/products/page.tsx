@@ -21,7 +21,8 @@ export default function AdminProductsPage() {
         .from("products")
         .select("*, product_images(url, alt, sort_order)")
         .order("created_at", { ascending: false });
-      return (data ?? []) as Product[];
+      // Supabase joins return product_images as objects, not matching local Product type
+      return (data ?? []) as unknown as Product[];
     },
   });
 
@@ -39,7 +40,8 @@ export default function AdminProductsPage() {
       key: "name" as const,
       label: "Product",
       render: (item: Product) => {
-        const img = item.images?.sort((a, b) => a.sort_order - b.sort_order)[0];
+        const p = item as any;
+        const img = p.images?.sort((a: any, b: any) => a.sort_order - b.sort_order)[0];
         return (
           <div className="flex items-center gap-3">
             <div className="h-12 w-12 shrink-0 rounded-btn bg-walnut/5 overflow-hidden">

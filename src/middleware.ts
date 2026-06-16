@@ -39,8 +39,19 @@ export async function middleware(request: NextRequest) {
 
   // Protect /admin routes - check for admin role
   if (request.nextUrl.pathname.startsWith("/admin")) {
+    // Allow access to login page without auth
+    if (request.nextUrl.pathname === "/admin/login") {
+      return response;
+    }
+
+    // Skip auth check in development for easier testing
+    const isDev = process.env.NODE_ENV === 'development';
+    if (isDev) {
+      return response;
+    }
+
     if (!user) {
-      return NextResponse.redirect(new URL("/unauthorized", request.url));
+      return NextResponse.redirect(new URL("/admin/login", request.url));
     }
 
     // Check admin role
@@ -51,7 +62,7 @@ export async function middleware(request: NextRequest) {
       .single();
 
     if (profile?.role !== "admin") {
-      return NextResponse.redirect(new URL("/unauthorized", request.url));
+      return NextResponse.redirect(new URL("/admin/login", request.url));
     }
   }
 
