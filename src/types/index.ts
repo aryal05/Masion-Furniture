@@ -12,18 +12,32 @@ export interface Product {
   id: string;
   slug: string;
   name: string;
+  description?: string;
   price: number;
   compareAtPrice?: number;
+  compare_at_price?: number | null;
   rating: number;
   reviewCount: number;
+  average_rating: number;
+  review_count: number;
   category: string;
+  category_id?: string;
   material: Material;
   colors: ColorOption[];
   images: string[];
   inStock: boolean;
   isOnSale: boolean;
+  is_on_sale?: boolean;
+  is_new?: boolean;
+  is_bestseller?: boolean;
   freeShipping: boolean;
+  free_shipping?: boolean;
+  total_stock?: number;
+  status?: "draft" | "published" | "archived";
   createdAt: string;
+  created_at?: string;
+  updated_at?: string;
+  variants?: Variant[];
 }
 
 // Legacy Product interface preserved for backward compatibility
