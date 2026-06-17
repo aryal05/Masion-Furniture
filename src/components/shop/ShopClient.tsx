@@ -28,6 +28,7 @@ export function ShopClient() {
     category, priceRange, material, rating, inStock, freeShipping, onSale,
     sort, page, view,
     setCategory, setPriceRange, setMaterial, setRating, setInStock, setFreeShipping, setOnSale,
+    setSort, setPage, setView,
     syncFromURL, clearFilters,
   } = useFilterStore();
 
@@ -143,8 +144,8 @@ export function ShopClient() {
               </div>
 
               <div className="flex items-center gap-3">
-                <SortDropdown />
-                <ViewToggle />
+                <SortDropdown value={sort} onChange={setSort} />
+                <ViewToggle view={view} onChange={setView} />
               </div>
             </div>
 
@@ -188,9 +189,9 @@ export function ShopClient() {
             ) : (
               <>
                 <m.div
-                  className={`grid gap-6 ${
+                  className={`grid gap-3 md:gap-4 lg:gap-6 ${
                     view === 'grid'
-                      ? 'grid-cols-1 sm:grid-cols-2 xl:grid-cols-3'
+                      ? 'grid-cols-2 md:grid-cols-3 lg:grid-cols-4'
                       : 'grid-cols-1'
                   }`}
                   variants={shouldReduceMotion ? undefined : staggerContainer(0.06)}
@@ -203,7 +204,7 @@ export function ShopClient() {
                       key={product.id}
                       variants={shouldReduceMotion ? undefined : scaleIn}
                     >
-                      <ProductCard product={product} view={view} />
+                      <ProductCard product={product} />
                     </m.div>
                   ))}
                 </m.div>
@@ -211,7 +212,11 @@ export function ShopClient() {
                 {/* Pagination */}
                 {totalPages > 1 && (
                   <div className="mt-12">
-                    <Pagination totalPages={totalPages} />
+                    <Pagination 
+                      currentPage={page} 
+                      totalPages={totalPages} 
+                      onPageChange={setPage} 
+                    />
                   </div>
                 )}
               </>
@@ -229,8 +234,21 @@ export function ShopClient() {
       <MobileFilterDrawer
         isOpen={mobileFilterOpen}
         onClose={() => setMobileFilterOpen(false)}
-        resultCount={sorted.length}
-      />
+        filters={currentFilters}
+        onApply={() => setMobileFilterOpen(false)}
+        onClear={clearFilters}
+      >
+        <FilterSidebar
+          filters={currentFilters}
+          onCategoryChange={setCategory}
+          onPriceRangeChange={setPriceRange}
+          onMaterialChange={setMaterial}
+          onRatingChange={setRating}
+          onInStockChange={setInStock}
+          onFreeShippingChange={setFreeShipping}
+          onOnSaleChange={setOnSale}
+        />
+      </MobileFilterDrawer>
     </section>
   );
 }

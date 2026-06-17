@@ -26,7 +26,8 @@ export function QuickViewModal({ product, onClose }: {
       variantId: selected.id, productId: product.id,
       name: product.name,
       variantLabel: [selected.color, selected.size].filter(Boolean).join(" / "),
-      image: product.images[0]?.url, price: selected.price ?? product.price,
+      image: typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url || '', 
+      price: selected.price ?? product.price,
       quantity: qty, maxStock: selected.stock,
     });
     if (imgRef.current) flyToCart(imgRef.current);
@@ -55,7 +56,13 @@ export function QuickViewModal({ product, onClose }: {
               >
                 {/* Image */}
                 <div ref={imgRef} className="relative aspect-[3/4] md:aspect-auto">
-                  <Image src={product.images[0]?.url} alt={product.name} fill className="object-cover" />
+                  <Image
+                    src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url || ''}
+                    alt={product.name}
+                    fill
+                    className="object-cover"
+                    sizes="(max-width: 768px) 92vw, 50vw"
+                  />
                 </div>
 
                 {/* Info */}

@@ -2,6 +2,7 @@
 
 import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -115,13 +116,19 @@ export function DealsOfDay() {
             <div className="flex gap-3 md:gap-4">
               {/* Product Image */}
               <div className="relative w-[100px] sm:w-[120px] md:w-[140px] h-[120px] sm:h-[140px] md:h-[160px] flex-shrink-0">
-                <m.img
-                  src={deal.image}
-                  alt={deal.name}
-                  className="w-full h-full object-contain"
+                <m.div
                   whileHover={{ scale: 1.08, rotate: -2 }}
                   transition={{ duration: 0.3 }}
-                />
+                  className="w-full h-full"
+                >
+                  <Image
+                    src={deal.image}
+                    alt={deal.name}
+                    fill
+                    className="object-contain"
+                    sizes="(max-width: 640px) 120px, 140px"
+                  />
+                </m.div>
                 {/* Discount Badge */}
                 <div className="absolute top-0 left-0 bg-[#2D4A2D] text-white text-xs font-semibold px-2 md:px-3 py-1 md:py-1.5 rounded-full">
                   {deal.discount}
@@ -182,13 +189,19 @@ export function DealsOfDay() {
               Shop Now →
             </m.button>
           </div>
-          <m.img
-            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&q=80"
-            alt="Gaming Chair"
-            className="absolute right-0 bottom-0 h-[180px] md:h-[260px] object-contain"
+          <m.div
+            className="absolute right-0 bottom-0 h-[180px] md:h-[260px] w-[200px] md:w-[300px]"
             animate={{ y: [0, -6, 0] }}
             transition={{ repeat: Infinity, duration: 2.5 }}
-          />
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=400&q=80"
+              alt="Gaming Chair"
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 200px, 300px"
+            />
+          </m.div>
         </m.div>
 
         {/* Banner 2 */}
@@ -215,13 +228,19 @@ export function DealsOfDay() {
               Shop Now →
             </m.button>
           </div>
-          <m.img
-            src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&q=80"
-            alt="Wood Chair"
-            className="absolute right-0 bottom-0 h-[180px] md:h-[260px] object-contain"
+          <m.div
+            className="absolute right-0 bottom-0 h-[180px] md:h-[260px] w-[200px] md:w-[300px]"
             animate={{ y: [0, -6, 0] }}
             transition={{ repeat: Infinity, duration: 2.5, delay: 0.3 }}
-          />
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1567538096630-e0c55bd6374c?w=400&q=80"
+              alt="Wood Chair"
+              fill
+              className="object-contain"
+              sizes="(max-width: 768px) 200px, 300px"
+            />
+          </m.div>
         </m.div>
       </div>
     </section>

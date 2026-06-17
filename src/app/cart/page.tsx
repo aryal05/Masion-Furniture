@@ -166,13 +166,13 @@ export default function CartPage() {
         </div>
       </div>
 
-      {/* Mobile Sticky Bottom Bar */}
+      {/* Mobile Sticky Bottom Bar — Above bottom nav */}
       {items.length > 0 && (
         <m.div
           initial={{ y: 80 }}
           animate={{ y: 0 }}
           transition={{ delay: 0.3, type: 'spring', stiffness: 300, damping: 30 }}
-          className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#E8E8E8] pb-safe h-20 flex items-center gap-3 px-4 z-40"
+          className="lg:hidden fixed bottom-16 left-0 right-0 bg-white border-t border-[#E8E8E8] pb-safe h-20 flex items-center gap-3 px-4 z-40"
         >
           <div className="flex-1">
             <p className="text-xs text-[#8A8A8A]">Total ({totalItems} items)</p>

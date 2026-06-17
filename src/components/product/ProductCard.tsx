@@ -28,7 +28,7 @@ export function ProductCard({ product, onQuickView }: {
           {/* Primary image — shared layout id for listing→PDP transition */}
           <motion.div layoutId={`product-image-${product.id}`} className="absolute inset-0">
             <Image
-              src={product.images[0]?.url}
+              src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url || ''}
               alt={`${product.name} — ${product.material}`}
               fill sizes="(max-width: 768px) 50vw, 33vw"
               className={`object-cover transition-all duration-700 ease-luxe
@@ -37,7 +37,10 @@ export function ProductCard({ product, onQuickView }: {
             />
             {product.images[1] && (
               <Image
-                src={product.images[1].url} alt="" fill sizes="33vw"
+                src={typeof product.images[1] === 'string' ? product.images[1] : product.images[1]?.url || ''} 
+                alt="" 
+                fill 
+                sizes="33vw"
                 className={`object-cover transition-opacity duration-[400ms] ${hovered ? "opacity-100" : "opacity-0"}`}
               />
             )}

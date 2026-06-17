@@ -11,7 +11,7 @@ export function ProductJsonLd({ product, url }: Props) {
     "@type": "Product",
     name: product.name,
     description: product.description,
-    image: product.images.map((img) => img.url),
+    image: product.images.map((img) => typeof img === 'string' ? img : img.url),
     sku: product.id,
     mpn: product.id,
     brand: {
@@ -24,7 +24,7 @@ export function ProductJsonLd({ product, url }: Props) {
       priceCurrency: "NPR",
       price: product.price,
       priceValidUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000).toISOString().split("T")[0],
-      availability: product.total_stock > 0
+      availability: (product.total_stock ?? 0) > 0
         ? "https://schema.org/InStock"
         : "https://schema.org/OutOfStock",
       seller: {
@@ -32,11 +32,11 @@ export function ProductJsonLd({ product, url }: Props) {
         name: "Maison Furniture",
       },
     },
-    aggregateRating: product.review_count > 0
+    aggregateRating: (product.review_count ?? 0) > 0
       ? {
           "@type": "AggregateRating",
-          ratingValue: product.average_rating,
-          reviewCount: product.review_count,
+          ratingValue: product.average_rating ?? 0,
+          reviewCount: product.review_count ?? 0,
         }
       : undefined,
     material: product.material,

@@ -1,7 +1,7 @@
 'use client';
 
-import { useMotionValue, useTransform, animate, useInView } from 'framer-motion';
-import { useEffect, useRef } from 'react';
+import { useMotionValue, useTransform, animate, useInView, useMotionValueEvent } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
 
 interface UseCountUpOptions {
   duration?: number;
@@ -15,12 +15,17 @@ export function useCountUp(
 ) {
   const { duration = 2, start = 0, decimals = 0 } = options;
   const count = useMotionValue(start);
-  const rounded = useTransform(count, (latest) => {
-    return decimals === 0 ? Math.round(latest) : latest.toFixed(decimals);
-  });
+  const [displayValue, setDisplayValue] = useState(
+    decimals === 0 ? Math.round(start).toString() : start.toFixed(decimals)
+  );
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
   const hasAnimated = useRef(false);
+
+  useMotionValueEvent(count, 'change', (latest) => {
+    const formatted = decimals === 0 ? Math.round(latest).toString() : latest.toFixed(decimals);
+    setDisplayValue(formatted);
+  });
 
   useEffect(() => {
     if (isInView && !hasAnimated.current) {
@@ -33,5 +38,5 @@ export function useCountUp(
     }
   }, [isInView, end, duration, count]);
 
-  return { ref, value: rounded };
+  return { ref, value: displayValue };
 }

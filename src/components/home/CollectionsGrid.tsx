@@ -35,19 +35,28 @@ const COLLECTIONS = [
   },
 ];
 
+/**
+ * CollectionsGrid — Shop by room section with scroll-triggered animations
+ * 
+ * Design Spec:
+ * - Mobile: 2-column grid (1:1 aspect ratio cards)
+ * - Desktop: 4-column masonry-style grid
+ * - Scroll-triggered fade-up animations
+ * - Hover scale effect on images
+ */
 export function CollectionsGrid() {
   return (
-    <section className="py-24">
-      <div className="mx-auto max-w-[1440px] px-6 lg:px-10">
+    <section className="py-16 md:py-24">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-10">
         <motion.header
           variants={fadeUp}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="mb-12 text-center"
+          className="mb-8 md:mb-12 text-center"
         >
           <p className="eyebrow">Explore</p>
-          <h2 className="mt-2 font-display text-3xl md:text-4xl">Shop by Room</h2>
+          <h2 className="mt-2 font-display text-2xl md:text-3xl lg:text-4xl">Shop by Room</h2>
         </motion.header>
 
         <motion.div
@@ -55,7 +64,7 @@ export function CollectionsGrid() {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6 md:grid-rows-2"
+          className="grid grid-cols-2 gap-3 md:gap-4 md:grid-cols-4 md:grid-rows-2"
         >
           {COLLECTIONS.map((collection) => (
             <motion.div
@@ -67,7 +76,7 @@ export function CollectionsGrid() {
                 href={`/collections/${collection.slug}`}
                 className="block h-full"
               >
-                <div className="relative h-full min-h-[200px] overflow-hidden rounded-card md:min-h-[280px]">
+                <div className="relative h-full min-h-[160px] sm:min-h-[200px] overflow-hidden rounded-card md:min-h-[280px]">
                   <Image
                     src={collection.image}
                     alt={collection.name}
@@ -76,8 +85,8 @@ export function CollectionsGrid() {
                     className="object-cover transition-transform duration-700 ease-luxe group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-charcoal/70 via-charcoal/20 to-transparent" />
-                  <div className="absolute bottom-0 left-0 p-6">
-                    <h3 className="font-display text-xl text-ivory md:text-2xl">
+                  <div className="absolute bottom-0 left-0 p-4 md:p-6">
+                    <h3 className="font-display text-lg md:text-xl lg:text-2xl text-ivory">
                       {collection.name}
                     </h3>
                     <p className="mt-1 text-sm text-ivory/70">

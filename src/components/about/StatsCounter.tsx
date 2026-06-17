@@ -1,6 +1,6 @@
 'use client';
 
-import { m, useReducedMotion } from 'framer-motion';
+import { useReducedMotion } from 'framer-motion';
 import { useCountUp } from '@/lib/hooks/useCountUp';
 
 interface StatsCounterProps {
@@ -16,7 +16,7 @@ export function StatsCounter({ value, suffix, label }: StatsCounterProps) {
   return (
     <div ref={ref} className="text-center">
       <div className="text-3xl sm:text-4xl lg:text-5xl font-black text-primary tracking-tight">
-        <m.span>{animatedValue}</m.span>
+        <span>{animatedValue}</span>
         <span className="text-gold">{suffix}</span>
       </div>
       <p className="text-sm text-muted mt-2 font-medium">{label}</p>

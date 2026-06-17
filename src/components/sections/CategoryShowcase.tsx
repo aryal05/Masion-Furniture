@@ -2,6 +2,7 @@
 
 import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -84,15 +85,21 @@ export function CategoryShowcase() {
           </div>
 
           {/* Product Image */}
-          <m.img
-            src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&q=80"
-            alt="Chair"
-            className="absolute right-0 bottom-0 h-[420px] object-contain"
+          <m.div
+            className="absolute right-0 bottom-0 h-[420px] w-[400px]"
             initial={{ opacity: 0, y: 10 }}
             animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
             transition={{ delay: 0.4, duration: 0.5 }}
             whileHover={{ scale: 1.04, y: -8 }}
-          />
+          >
+            <Image
+              src="https://images.unsplash.com/photo-1592078615290-033ee584e267?w=600&q=80"
+              alt="Chair"
+              fill
+              className="object-contain"
+              sizes="400px"
+            />
+          </m.div>
         </m.div>
 
         {/* Right Column - Stacked Cards */}
@@ -134,15 +141,21 @@ export function CategoryShowcase() {
             </div>
 
             {/* Product Image */}
-            <m.img
-              src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80"
-              alt="Sofa"
-              className="absolute right-4 bottom-0 h-[180px] object-contain"
+            <m.div
+              className="absolute right-4 bottom-0 h-[180px] w-[200px]"
               initial={{ opacity: 0, y: 10 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ delay: 0.4, duration: 0.5 }}
               whileHover={{ scale: 1.04, y: -8 }}
-            />
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=400&q=80"
+                alt="Sofa"
+                fill
+                className="object-contain"
+                sizes="200px"
+              />
+            </m.div>
           </m.div>
 
           {/* Small Card - Lighting */}
@@ -182,15 +195,21 @@ export function CategoryShowcase() {
             </div>
 
             {/* Product Image */}
-            <m.img
-              src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=80"
-              alt="Lighting"
-              className="absolute right-4 bottom-0 h-[180px] object-contain"
+            <m.div
+              className="absolute right-4 bottom-0 h-[180px] w-[200px]"
               initial={{ opacity: 0, y: 10 }}
               animate={inView ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
               transition={{ delay: 0.55, duration: 0.5 }}
               whileHover={{ scale: 1.04, y: -8 }}
-            />
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?w=400&q=80"
+                alt="Lighting"
+                fill
+                className="object-contain"
+                sizes="200px"
+              />
+            </m.div>
           </m.div>
         </div>
       </div>

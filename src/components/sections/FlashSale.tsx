@@ -3,6 +3,7 @@
 import { m, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 
 const slideLeft = {
   hidden: { opacity: 0, x: -40 },
@@ -138,34 +139,46 @@ export function FlashSale() {
           animate={inView ? "visible" : "hidden"}
         >
           <m.div
-            className="w-[200px] h-[380px] rounded-[2rem] overflow-hidden border-4 border-white shadow-xl"
+            className="w-[200px] h-[380px] rounded-[2rem] overflow-hidden border-4 border-white shadow-xl relative"
             initial={{ opacity: 0, y: 40, rotate: -3 }}
             animate={inView ? { opacity: 1, y: 0, rotate: -3 } : { opacity: 0, y: 40, rotate: -3 }}
             transition={{ type: 'spring', stiffness: 100, damping: 15 }}
             whileHover={{ scale: 1.03, rotate: 0 }}
           >
-            <m.img
-              src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80"
-              alt="Kitchen"
-              className="w-full h-full object-cover"
+            <m.div
+              className="w-full h-full"
               animate={{ y: [0, -8, 0] }}
               transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut' }}
-            />
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=400&q=80"
+                alt="Kitchen"
+                fill
+                className="object-cover"
+                sizes="200px"
+              />
+            </m.div>
           </m.div>
           <m.div
-            className="w-[200px] h-[380px] rounded-[2rem] overflow-hidden border-4 border-white shadow-xl"
+            className="w-[200px] h-[380px] rounded-[2rem] overflow-hidden border-4 border-white shadow-xl relative"
             initial={{ opacity: 0, y: 40, rotate: 2 }}
             animate={inView ? { opacity: 1, y: 0, rotate: 2 } : { opacity: 0, y: 40, rotate: 2 }}
             transition={{ type: 'spring', stiffness: 100, damping: 15, delay: 0.5 }}
             whileHover={{ scale: 1.03, rotate: 0 }}
           >
-            <m.img
-              src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&q=80"
-              alt="Living Room"
-              className="w-full h-full object-cover"
+            <m.div
+              className="w-full h-full"
               animate={{ y: [0, -8, 0] }}
               transition={{ repeat: Infinity, duration: 3, ease: 'easeInOut', delay: 0.3 }}
-            />
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?w=400&q=80"
+                alt="Living Room"
+                fill
+                className="object-cover"
+                sizes="200px"
+              />
+            </m.div>
           </m.div>
         </m.div>
       </div>

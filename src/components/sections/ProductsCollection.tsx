@@ -4,6 +4,7 @@ import { m, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -202,13 +203,19 @@ export function ProductsCollection() {
           >
             {/* Image Area */}
             <div className="relative bg-[#F0F0EC] rounded-t-2xl h-[200px] sm:h-[220px] md:h-[280px]">
-              <m.img
-                src={product.image}
-                alt={product.name}
-                className="w-full h-full object-contain p-3 md:p-4"
+              <m.div
                 whileHover={{ scale: 1.04 }}
                 transition={{ duration: 0.3 }}
-              />
+                className="w-full h-full"
+              >
+                <Image
+                  src={product.image}
+                  alt={product.name}
+                  fill
+                  className="object-contain p-3 md:p-4"
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </m.div>
 
               {/* Discount Badge */}
               <m.div

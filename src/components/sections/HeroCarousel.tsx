@@ -4,6 +4,7 @@ import { m } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 
 const ROOMS = [
   {
@@ -52,10 +53,12 @@ function RoomCard({ room }: { room: typeof ROOMS[0] }) {
     >
       {/* Image Area */}
       <div className="h-[220px] sm:h-[260px] md:h-[280px] lg:h-[300px] xl:h-[300px] relative overflow-hidden">
-        <img
+        <Image
           src={room.image}
           alt={room.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+          fill
+          className="object-cover transition-transform duration-500 group-hover:scale-105"
+          sizes="(max-width: 480px) 280px, (max-width: 640px) 320px, (max-width: 768px) 360px, (max-width: 1024px) 380px, 420px"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
 
@@ -139,16 +142,19 @@ function RoomCard({ room }: { room: typeof ROOMS[0] }) {
 export default function HeroCarousel() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   const getCardWidth = () => {
-    if (typeof window !== 'undefined') {
-      const width = window.innerWidth;
-      if (width < 480) return 280;
-      if (width < 640) return 320;
-      if (width < 768) return 360;
-      if (width < 1024) return 380;
-      return 420;
-    }
+    if (!mounted) return 420; // Default for SSR
+    const width = window.innerWidth;
+    if (width < 480) return 280;
+    if (width < 640) return 320;
+    if (width < 768) return 360;
+    if (width < 1024) return 380;
     return 420;
   };
 

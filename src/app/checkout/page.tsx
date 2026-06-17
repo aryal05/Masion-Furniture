@@ -126,7 +126,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">First Name</label>
                     <input
                       type="text"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="John"
                     />
                   </div>
@@ -134,7 +134,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">Last Name</label>
                     <input
                       type="text"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="Doe"
                     />
                   </div>
@@ -142,7 +142,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">Email</label>
                     <input
                       type="email"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="john@example.com"
                     />
                   </div>
@@ -150,7 +150,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">Phone</label>
                     <input
                       type="tel"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="+1 234 567 890"
                     />
                   </div>
@@ -158,7 +158,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">Address</label>
                     <input
                       type="text"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="123 Main Street"
                     />
                   </div>
@@ -166,7 +166,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">City</label>
                     <input
                       type="text"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="New York"
                     />
                   </div>
@@ -174,7 +174,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">State</label>
                     <input
                       type="text"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="NY"
                     />
                   </div>
@@ -182,7 +182,7 @@ export default function CheckoutPage() {
                     <label className="text-sm font-medium text-[#1A1A1A] mb-1.5 block">ZIP Code</label>
                     <input
                       type="text"
-                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
+                      className="w-full border border-[#E0E0E0] rounded-xl px-4 py-3 md:py-3 h-12 text-sm focus:border-[#2D4A2D] focus:ring-2 focus:ring-[#2D4A2D]/20 outline-none transition-all"
                       placeholder="10001"
                     />
                   </div>
@@ -357,12 +357,12 @@ export default function CheckoutPage() {
         </m.div>
       </div>
 
-      {/* Mobile Sticky Bottom Bar */}
+      {/* Mobile Sticky Bottom Bar — Above bottom nav */}
       <m.div
         initial={{ y: 80 }}
         animate={{ y: 0 }}
         transition={{ delay: 0.3, type: 'spring', stiffness: 300, damping: 30 }}
-        className="lg:hidden fixed bottom-0 left-0 right-0 bg-white border-t border-[#E8E8E8] pb-safe h-20 flex items-center gap-3 px-4 z-40"
+        className="lg:hidden fixed bottom-16 left-0 right-0 bg-white border-t border-[#E8E8E8] pb-safe h-20 flex items-center gap-3 px-4 z-40"
       >
         <div className="flex-1">
           <p className="text-xs text-[#8A8A8A]">Total ({totalItems} items)</p>

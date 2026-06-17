@@ -25,7 +25,7 @@ export function ProductListRow({ product, onQuickView }: Props) {
       <Link href={`/product/${product.slug}`} className="relative w-32 shrink-0 md:w-48">
         <div className="aspect-square overflow-hidden rounded-btn">
           <Image
-            src={product.images[0]?.url}
+            src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url || ''}
             alt={product.name}
             fill
             sizes="200px"

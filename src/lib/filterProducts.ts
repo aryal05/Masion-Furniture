@@ -1,6 +1,5 @@
 import { Product, Filter } from '@/types';
-
-export type SortOption = 'best-match' | 'price-asc' | 'price-desc' | 'newest' | 'top-rated';
+import type { SortOption } from './filters';
 
 /**
  * Filter products based on the provided filter criteria
@@ -66,32 +65,34 @@ export function sortProducts(products: Product[], sort: SortOption): Product[] {
     
     case 'newest':
       return sorted.sort((a, b) => 
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+        new Date(b.createdAt || b.created_at || 0).getTime() - new Date(a.createdAt || a.created_at || 0).getTime()
       );
     
-    case 'top-rated':
+    case 'rating':
       return sorted.sort((a, b) => {
         // First sort by rating, then by review count for tiebreaker
-        if (b.rating !== a.rating) {
-          return b.rating - a.rating;
+        const ratingA = a.rating || a.average_rating || 0;
+        const ratingB = b.rating || b.average_rating || 0;
+        if (ratingB !== ratingA) {
+          return ratingB - ratingA;
         }
-        return b.reviewCount - a.reviewCount;
+        const reviewCountA = a.reviewCount || a.review_count || 0;
+        const reviewCountB = b.reviewCount || b.review_count || 0;
+        return reviewCountB - reviewCountA;
       });
     
-    case 'best-match':
-    default:
-      // Best match: prioritize items on sale with high ratings
+    case 'bestselling':
+      // Sort by a combination of sales and rating
       return sorted.sort((a, b) => {
-        // Sale items first
-        if (a.isOnSale && !b.isOnSale) return -1;
-        if (!a.isOnSale && b.isOnSale) return 1;
-        
-        // Then by rating
-        if (b.rating !== a.rating) return b.rating - a.rating;
-        
-        // Then by review count
-        return b.reviewCount - a.reviewCount;
+        const scoreA = (a.rating || a.average_rating || 0) * (a.reviewCount || a.review_count || 1);
+        const scoreB = (b.rating || b.average_rating || 0) * (b.reviewCount || b.review_count || 1);
+        return scoreB - scoreA;
       });
+    
+    case 'featured':
+    default:
+      // Return products as-is (they're already in featured order)
+      return sorted;
   }
 }
 

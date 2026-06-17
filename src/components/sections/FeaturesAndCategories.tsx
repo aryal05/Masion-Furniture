@@ -3,6 +3,7 @@
 import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 20 },
@@ -169,16 +170,22 @@ export default function FeaturesAndCategories() {
             </div>
 
             {/* Product Image */}
-            <m.img
-              src="https://images.unsplash.com/photo-1503602642458-232111445657?w=600&q=80"
-              alt="Chair"
-              className="absolute right-0 bottom-0 h-[260px] md:h-[460px] object-contain z-10 pointer-events-none"
-              style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.12))' }}
+            <m.div
+              className="absolute right-0 bottom-0 h-[260px] md:h-[460px] w-[300px] md:w-[400px] z-10 pointer-events-none"
               initial={{ y: 20, opacity: 0 }}
               animate={categoriesInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
               whileHover={{ scale: 1.05, y: -6, transition: { duration: 0.35 } }}
-            />
+            >
+              <Image
+                src="https://images.unsplash.com/photo-1503602642458-232111445657?w=600&q=80"
+                alt="Chair"
+                fill
+                className="object-contain"
+                style={{ filter: 'drop-shadow(0 16px 40px rgba(0,0,0,0.12))' }}
+                sizes="(max-width: 768px) 300px, 400px"
+              />
+            </m.div>
           </m.div>
 
           {/* Right Column - Stacked Cards */}
@@ -240,16 +247,22 @@ export default function FeaturesAndCategories() {
               </div>
 
               {/* Product Image */}
-              <m.img
-                src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80&fit=crop&crop=right"
-                alt="Sofa"
-                className="absolute right-2 bottom-0 h-[140px] md:h-[185px] object-contain z-10 pointer-events-none"
-                style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.10))' }}
+              <m.div
+                className="absolute right-2 bottom-0 h-[140px] md:h-[185px] w-[150px] md:w-[200px] z-10 pointer-events-none"
                 initial={{ y: 20, opacity: 0 }}
                 animate={categoriesInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
                 whileHover={{ scale: 1.05, y: -6, transition: { duration: 0.35 } }}
-              />
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=500&q=80&fit=crop&crop=right"
+                  alt="Sofa"
+                  fill
+                  className="object-contain"
+                  style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.10))' }}
+                  sizes="(max-width: 768px) 150px, 200px"
+                />
+              </m.div>
             </m.div>
 
             {/* Lighting Card */}
@@ -309,16 +322,22 @@ export default function FeaturesAndCategories() {
               </div>
 
               {/* Product Image */}
-              <m.img
-                src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=400&q=80"
-                alt="Lighting"
-                className="absolute right-2 bottom-0 h-[140px] md:h-[185px] object-contain z-10 pointer-events-none"
-                style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.10))' }}
+              <m.div
+                className="absolute right-2 bottom-0 h-[140px] md:h-[185px] w-[150px] md:w-[200px] z-10 pointer-events-none"
                 initial={{ y: 20, opacity: 0 }}
                 animate={categoriesInView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
                 transition={{ delay: 0.3, duration: 0.5 }}
                 whileHover={{ scale: 1.05, y: -6, transition: { duration: 0.35 } }}
-              />
+              >
+                <Image
+                  src="https://images.unsplash.com/photo-1524484485831-a92ffc0de03f?w=400&q=80"
+                  alt="Lighting"
+                  fill
+                  className="object-contain"
+                  style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.10))' }}
+                  sizes="(max-width: 768px) 150px, 200px"
+                />
+              </m.div>
             </m.div>
           </div>
         </m.div>

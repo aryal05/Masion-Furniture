@@ -1,7 +1,18 @@
 import { Product } from '@/types';
 
+// Helper to ensure products have both camelCase and snake_case properties
+const normalizeProduct = (p: any): Product => ({
+  ...p,
+  average_rating: p.rating || p.average_rating,
+  review_count: p.reviewCount || p.review_count,
+  compare_at_price: p.compareAtPrice || p.compare_at_price,
+  is_on_sale: p.isOnSale ?? p.is_on_sale,
+  free_shipping: p.freeShipping ?? p.free_shipping,
+  created_at: p.createdAt || p.created_at,
+});
+
 // 24+ realistic seeded products with real furniture names and plausible prices
-export const products: Product[] = [
+const rawProducts = [
   {
     id: 'prod-001',
     slug: 'nordic-lounge-chair',
@@ -613,6 +624,8 @@ export const products: Product[] = [
     createdAt: '2024-02-06T00:00:00Z'
   }
 ];
+
+export const products: Product[] = rawProducts.map(normalizeProduct);
 
 // Helper function to get product by slug
 export function getProductBySlug(slug: string): Product | undefined {

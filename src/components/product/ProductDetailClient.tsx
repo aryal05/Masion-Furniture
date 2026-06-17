@@ -75,14 +75,99 @@ export function ProductDetailClient({ product, relatedProducts, reviews }: Props
         </div>
       </div>
 
+      {/* Mobile Sticky Add-to-Cart Bar — Above bottom nav */}
+      <div
+        className="
+          fixed bottom-16 left-0 right-0 z-40
+          bg-white border-t border-gray-200 p-4 md:hidden
+        "
+      >
+        <div className="flex gap-3">
+          <button
+            onClick={handleAddToCart}
+            disabled={!inStock || addedToCart}
+            className="
+              flex-1 h-12
+              font-semibold rounded-xl
+              transition-colors active:scale-95
+              disabled:opacity-50 disabled:cursor-not-allowed
+            "
+            style={{
+              backgroundColor: inStock ? '#2D4A2D' : '#9CA3AF',
+              color: '#FFFFFF'
+            }}
+          >
+            {addedToCart ? 'Added!' : inStock ? 'Add to Cart' : 'Out of Stock'}
+          </button>
+          <button
+            className="
+              w-12 h-12 border border-gray-200
+              rounded-xl flex items-center justify-center
+              active:scale-95 transition-transform
+            "
+            aria-label="Add to wishlist"
+          >
+            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" style={{ color: '#1A1A1A' }}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12z" />
+            </svg>
+          </button>
+        </div>
+      </div>
+
       {/* Main Product Section */}
       <section className="max-w-[1600px] mx-auto px-4 sm:px-6 md:px-10 lg:px-16 py-8 lg:py-12">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16">
           {/* Image Gallery */}
           <div className="space-y-4">
-            {/* Main Image */}
+            {/* Main Image — Mobile swipe enabled */}
+            <div 
+              className="
+                aspect-square bg-card rounded-2xl overflow-hidden relative
+                md:hidden
+              "
+            >
+              {discount > 0 && (
+                <span className="absolute top-4 left-4 z-10 bg-rose text-white text-xs font-bold px-3 py-1 rounded-full">
+                  -{discount}%
+                </span>
+              )}
+              {product.is_new && (
+                <span className="absolute top-4 right-4 z-10 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
+                  NEW
+                </span>
+              )}
+              {/* Mobile swipe gallery */}
+              <div
+                className="
+                  w-full h-full flex overflow-x-auto
+                  snap-x snap-mandatory
+                  scrollbar-hide
+                  -webkit-overflow-scrolling: touch
+                "
+                style={{ scrollSnapType: 'x mandatory' }}
+              >
+                {images.map((img, index) => (
+                  <div
+                    key={img.id}
+                    className="snap-start shrink-0 w-full h-full"
+                    onClick={() => setSelectedImageIndex(index)}
+                  >
+                    <Image
+                      src={img.url}
+                      alt={img.alt ?? product.name}
+                      fill
+                      className="object-cover"
+                      priority={index === 0}
+                      sizes="100vw"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Desktop Main Image */}
             <m.div 
-              className="aspect-square bg-card rounded-2xl overflow-hidden relative"
+              className="hidden md:block aspect-square bg-card rounded-2xl overflow-hidden relative"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
@@ -112,14 +197,15 @@ export function ProductDetailClient({ product, relatedProducts, reviews }: Props
                     fill
                     className="object-cover"
                     priority
+                    sizes="(max-width: 1024px) 100vw, 50vw"
                   />
                 </m.div>
               </AnimatePresence>
             </m.div>
 
-            {/* Thumbnails */}
+            {/* Thumbnails — Desktop only */}
             {images.length > 1 && (
-              <div className="flex gap-3 overflow-x-auto pb-2">
+              <div className="hidden md:flex gap-3 overflow-x-auto pb-2">
                 {images.map((img, index) => (
                   <button
                     key={img.id}
@@ -133,6 +219,7 @@ export function ProductDetailClient({ product, relatedProducts, reviews }: Props
                       alt={img.alt ?? `${product.name} thumbnail ${index + 1}`}
                       fill
                       className="object-cover"
+                      sizes="80px"
                     />
                   </button>
                 ))}

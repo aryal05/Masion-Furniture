@@ -34,7 +34,7 @@ export const ProductCard = memo(function ProductCard({ product, priority = false
         {/* Image */}
         <div className="relative h-[280px] bg-surface overflow-hidden">
           <Image
-            src={product.images[0]}
+            src={typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url || ''}
             alt={product.name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"

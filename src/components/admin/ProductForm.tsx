@@ -5,7 +5,7 @@ import { z } from "zod";
 import { ImageUploader } from "./ImageUploader";
 import { VariantMatrix } from "./VariantMatrix";
 import { RichTextEditor } from "./RichTextEditor";
-import type { Product } from "@/types";
+import type { Product, ProductImage } from "@/types";
 
 const productSchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -131,7 +131,10 @@ export function ProductForm({ product, onSubmit, loading }: Props) {
       <section className="rounded-card border border-walnut/10 bg-white p-6 shadow-warm">
         <h2 className="font-display text-lg mb-6">Images</h2>
         <ImageUploader
-          images={product?.images ?? []}
+          images={(Array.isArray(product?.images) && typeof product?.images[0] === 'object' 
+            ? product.images 
+            : []) as ProductImage[]
+          }
           onImagesChange={() => {}}
         />
       </section>

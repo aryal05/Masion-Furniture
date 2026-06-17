@@ -24,7 +24,7 @@ export interface Product {
   category_id?: string;
   material: Material;
   colors: ColorOption[];
-  images: string[];
+  images: string[] | ProductImage[];
   inStock: boolean;
   isOnSale: boolean;
   is_on_sale?: boolean;

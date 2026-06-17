@@ -3,9 +3,10 @@
 import { create } from 'zustand';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { Filter, Material } from '@/types';
+import type { SortOption } from '@/lib/filters';
 
 interface FilterState extends Filter {
-  sort: 'best-match' | 'price-asc' | 'price-desc' | 'newest' | 'top-rated';
+  sort: SortOption;
   page: number;
   view: 'grid' | 'list';
 }
@@ -34,7 +35,7 @@ const initialState: FilterState = {
   inStock: undefined,
   freeShipping: undefined,
   onSale: undefined,
-  sort: 'best-match',
+  sort: 'featured',
   page: 1,
   view: 'grid'
 };
@@ -112,7 +113,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
       inStock: searchParams.get('inStock') === 'true' ? true : undefined,
       freeShipping: searchParams.get('freeShipping') === 'true' ? true : undefined,
       onSale: searchParams.get('onSale') === 'true' ? true : undefined,
-      sort: (searchParams.get('sort') as FilterState['sort']) || 'best-match',
+      sort: (searchParams.get('sort') as SortOption) || 'featured',
       page: Number(searchParams.get('page')) || 1,
       view: (searchParams.get('view') as FilterState['view']) || 'grid'
     });
@@ -131,7 +132,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     if (state.inStock) searchParams.set('inStock', 'true');
     if (state.freeShipping) searchParams.set('freeShipping', 'true');
     if (state.onSale) searchParams.set('onSale', 'true');
-    if (state.sort !== 'best-match') searchParams.set('sort', state.sort);
+    if (state.sort !== 'featured') searchParams.set('sort', state.sort);
     if (state.page > 1) searchParams.set('page', state.page.toString());
     if (state.view !== 'grid') searchParams.set('view', state.view);
     

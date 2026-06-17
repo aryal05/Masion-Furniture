@@ -2,6 +2,7 @@
 
 import { m } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
+import Image from 'next/image';
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
@@ -116,13 +117,19 @@ export function NewsBlog() {
           >
             {/* Image Area */}
             <div className="relative rounded-2xl overflow-hidden h-[260px]">
-              <m.img
-                src={blog.image}
-                alt={blog.title}
-                className="w-full h-full object-cover rounded-2xl"
+              <m.div
                 whileHover={{ scale: 1.08 }}
                 transition={{ duration: 0.5 }}
-              />
+                className="w-full h-full"
+              >
+                <Image
+                  src={blog.image}
+                  alt={blog.title}
+                  fill
+                  className="object-cover rounded-2xl"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                />
+              </m.div>
 
               {/* Date Badge */}
               <m.div

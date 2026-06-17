@@ -45,12 +45,12 @@ export function BestSellersCarousel() {
   };
 
   return (
-    <section className="py-24 bg-white">
-      <div className="mx-auto max-w-[1440px] px-6 lg:px-10">
-        <header className="mb-10 flex items-end justify-between">
+    <section className="py-16 md:py-24 bg-white">
+      <div className="mx-auto max-w-[1440px] px-4 sm:px-6 md:px-10">
+        <header className="mb-8 md:mb-10 flex items-end justify-between">
           <div>
             <p className="eyebrow">Customer Favorites</p>
-            <h2 className="mt-2 font-display text-3xl md:text-4xl">Bestsellers</h2>
+            <h2 className="mt-2 font-display text-2xl md:text-3xl lg:text-4xl">Bestsellers</h2>
           </div>
           <div className="hidden md:flex gap-2">
             <NavButton direction="left" onClick={() => scroll("left")} disabled={!canScrollLeft} />
@@ -61,11 +61,11 @@ export function BestSellersCarousel() {
         <div
           ref={scrollRef}
           onScroll={updateScrollButtons}
-          className="no-scrollbar -mx-6 flex gap-6 overflow-x-auto px-6 scroll-smooth lg:-mx-10 lg:px-10"
+          className="no-scrollbar -mx-4 sm:-mx-6 flex gap-3 md:gap-4 lg:gap-6 overflow-x-auto px-4 sm:px-6 scroll-smooth lg:-mx-10 lg:px-10"
         >
           {isLoading
             ? Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="w-[280px] shrink-0 md:w-[320px]">
+                <div key={i} className="w-[160px] sm:w-[240px] md:w-[280px] lg:w-[320px] shrink-0">
                   <div className="aspect-[3/4] animate-shimmer rounded-card" />
                   <div className="mt-4 h-5 w-3/4 animate-shimmer rounded" />
                   <div className="mt-2 h-4 w-1/3 animate-shimmer rounded" />
@@ -78,7 +78,7 @@ export function BestSellersCarousel() {
                   initial="hidden"
                   whileInView="visible"
                   viewport={{ once: true }}
-                  className="w-[280px] shrink-0 md:w-[320px]"
+                  className="w-[160px] sm:w-[240px] md:w-[280px] lg:w-[320px] shrink-0"
                 >
                   <ProductCard product={product} onQuickView={setQuickViewProduct} />
                 </motion.div>

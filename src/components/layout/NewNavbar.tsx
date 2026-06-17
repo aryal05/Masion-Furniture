@@ -243,7 +243,7 @@ export function NewNavbar() {
                   animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
                   transition={shouldReduceMotion ? undefined : { duration: durations.base, delay: index * 0.05 }}
                   className="relative"
-                  {...(link.hasMegaMenu
+                  {...('hasMegaMenu' in link && link.hasMegaMenu
                     ? {
                         onMouseEnter: handleMegaMenuEnter,
                         onMouseLeave: handleMegaMenuLeave,

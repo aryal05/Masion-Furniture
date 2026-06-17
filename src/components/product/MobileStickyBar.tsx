@@ -23,7 +23,7 @@ export function MobileStickyBar({ product, selectedVariant, quantity }: Props) {
       productId: product.id,
       name: product.name,
       variantLabel: [selectedVariant.color, selectedVariant.size].filter(Boolean).join(" / "),
-      image: product.images[0]?.url,
+      image: typeof product.images[0] === 'string' ? product.images[0] : product.images[0]?.url || '',
       price,
       quantity,
       maxStock: stock,
